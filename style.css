@@ -1,0 +1,81 @@
+@import url("https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap");
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+body {
+  padding-left: 5%;
+  padding-right: 5%;
+}
+h1 {
+  font-family: "Pixelify Sans", serif;
+  font-weight: 700;
+  font-size: 4.375rem;
+  color: #000000b3;
+  margin-left: 20px;
+  margin-bottom: 40px;
+}
+.tablegrid {
+  background-color: #b2b2b2;
+  width: 100%;
+  height: 100%;
+  border: #00000066 3px solid;
+}
+.table {
+  background-color: #d3d3d3;
+  display: grid;
+  grid-template-rows: 20vh 20vh 20vh;
+  grid-template-columns: 20vh 20vh 20vh;
+  gap: 2.5px;
+  border: 5px solid #d3d3d3;
+}
+.craft {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+img {
+  width: 150px;
+}
+.resultgrid {
+  background-color: #b2b2b2;
+  width: 20vh;
+  height: 20vh;
+  border: #00000066 3px solid;
+}
+.tablegrid:hover {
+  background-color: #d9d9d9;
+}
+h2 {
+  font-family: "Pixelify Sans", serif;
+  font-weight: 700;
+  font-size: 3rem;
+  color: #000000b3;
+  margin-top: 30px;
+}
+.inventorygrid {
+  background-color: #00000066;
+  width: 80px;
+  height: 80px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: #00000066 3px solid;
+}
+.inventorytable {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  margin-left: 40px;
+  margin-top: 20px;
+}
+.itemsize {
+  width: 80%;
+  height: 80%;
+}
+.arrow {
+  stroke: #4c4c4c;
+}
