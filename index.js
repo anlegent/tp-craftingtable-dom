@@ -2,7 +2,7 @@ const MATERIAL_AIR_ID = "";
 const MATERIAL_IRON_INGOT_ID = "IRON-INGOT";
 const MATERIAL_STICK_ID = "STICK";
 const MATERIAL_GOLD_INGOT_ID = "GOLD-INGOT";
-const MATERIAL_DIAMOND_ID = "COPPER-INGOT";
+const MATERIAL_DIAMOND_ID = "DIAMOND";
 const MATERIAL_COAL_ID = "COAL";
 
 const MATERIAL_AIR_IMG = "./assets/air.webp";
@@ -51,6 +51,18 @@ const ironAxeRecipe = [
   MATERIAL_STICK_ID,
   MATERIAL_AIR_ID,
 ];
+const blockOfIronRecipe = [
+  MATERIAL_IRON_INGOT_ID,
+  MATERIAL_IRON_INGOT_ID,
+  MATERIAL_IRON_INGOT_ID,
+  MATERIAL_IRON_INGOT_ID,
+  MATERIAL_IRON_INGOT_ID,
+  MATERIAL_IRON_INGOT_ID,
+  MATERIAL_IRON_INGOT_ID,
+  MATERIAL_IRON_INGOT_ID,
+  MATERIAL_IRON_INGOT_ID,
+];
+
 const goldenPickaxeRecipe = [
   MATERIAL_GOLD_INGOT_ID,
   MATERIAL_GOLD_INGOT_ID,
@@ -73,6 +85,18 @@ const goldenAxeRecipe = [
   MATERIAL_STICK_ID,
   MATERIAL_AIR_ID,
 ];
+const blockOfGoldRecipe = [
+  MATERIAL_GOLD_INGOT_ID,
+  MATERIAL_GOLD_INGOT_ID,
+  MATERIAL_GOLD_INGOT_ID,
+  MATERIAL_GOLD_INGOT_ID,
+  MATERIAL_GOLD_INGOT_ID,
+  MATERIAL_GOLD_INGOT_ID,
+  MATERIAL_GOLD_INGOT_ID,
+  MATERIAL_GOLD_INGOT_ID,
+  MATERIAL_GOLD_INGOT_ID,
+];
+
 const diamondPickaxeRecipe = [
   MATERIAL_DIAMOND_ID,
   MATERIAL_DIAMOND_ID,
@@ -95,6 +119,17 @@ const diamondAxeRecipe = [
   MATERIAL_STICK_ID,
   MATERIAL_AIR_ID,
 ];
+const blockOfDiamondRecipe = [
+  MATERIAL_DIAMOND_ID,
+  MATERIAL_DIAMOND_ID,
+  MATERIAL_DIAMOND_ID,
+  MATERIAL_DIAMOND_ID,
+  MATERIAL_DIAMOND_ID,
+  MATERIAL_DIAMOND_ID,
+  MATERIAL_DIAMOND_ID,
+  MATERIAL_DIAMOND_ID,
+  MATERIAL_DIAMOND_ID,
+];
 
 const torchRecipe = [
   MATERIAL_AIR_ID,
@@ -107,40 +142,67 @@ const torchRecipe = [
   MATERIAL_STICK_ID,
   MATERIAL_AIR_ID,
 ];
+const blockOfCoalRecipe = [
+  MATERIAL_COAL_ID,
+  MATERIAL_COAL_ID,
+  MATERIAL_COAL_ID,
+  MATERIAL_COAL_ID,
+  MATERIAL_COAL_ID,
+  MATERIAL_COAL_ID,
+  MATERIAL_COAL_ID,
+  MATERIAL_COAL_ID,
+  MATERIAL_COAL_ID,
+];
 
 const ironPickaxeRecipeImageSrc = "./assets/iron-pickaxe.webp";
 const ironAxeRecipeImageSrc = "./assets/iron-axe.webp";
+const blockOfIronRecipeImageSrc = "./assets/block-of-iron";
 const goldenPickaxeRecipeImageSrc = "./assets/golden-pickaxe.webp";
 const goldenAxeRecipeImageSrc = "./assets/golden-axe.webp";
+const blockOfGoldRecipeImageSrc = "./assets/block-of-gold";
 const diamondPickaxeRecipeImageSrc = "./assets/diamond-pickaxe.webp";
 const diamondAxeRecipeImageSrc = "./assets/diamond-axe.webp";
+const blockOfDiamondRecipeImageSrc = "./assets/block-of-diamond";
 
 const torchRecipeImageSrc = "./assets/torch.webp";
+const blockOfCoalRecipeImageSrc = "./assets/block-of-coal";
 
 const recipeList = [
   ironPickaxeRecipe,
   ironAxeRecipe,
+  blockOfIronRecipe,
   goldenPickaxeRecipe,
   goldenAxeRecipe,
+  blockOfGoldRecipe,
   diamondPickaxeRecipe,
   diamondAxeRecipe,
+  blockOfDiamondRecipe,
   torchRecipe,
+  blockOfCoalRecipe,
 ];
 const recipeImageSrcList = [
   ironPickaxeRecipeImageSrc,
   ironAxeRecipeImageSrc,
+  blockOfIronRecipeImageSrc,
   goldenPickaxeRecipeImageSrc,
   goldenAxeRecipeImageSrc,
+  blockOfGoldRecipeImageSrc,
   diamondPickaxeRecipeImageSrc,
   diamondAxeRecipeImageSrc,
+  blockOfDiamondRecipeImageSrc,
   torchRecipeImageSrc,
+  blockOfCoalRecipeImageSrc,
 ];
 
 const craftingTable = ["", "", "", "", "", "", "", "", ""];
 const inventoryTable = [2, 5, 1, 3, 4];
 
-let pipette = MATERIAL_AIR_ID;
+//let pipette = MATERIAL_AIR_ID;
+let selectedMaterialName = "";
+let selectedMaterialImgSrc = "";
+let selectedButton = null;
 // create item
+let inv = document.getElementById("inventory");
 
 function createItem(alt, src) {
   const createInvButton = document.createElement("button");
@@ -149,19 +211,64 @@ function createItem(alt, src) {
   createInvImg.alt = alt;
 
   createInvButton.appendChild(createInvImg);
-  createInvImg.classList.add("itemsize");
+  createInvImg.classList.add("inventorygrid");
 
   return createInvButton;
 }
 
 for (let i = 0; i < inventoryTable.length; i++) {
   const itemNumber = inventoryTable[i];
+  const materialName = materials[itemNumber];
+  const materialImgSrc = materialsImageSrc[itemNumber];
 
-  const createInvButton = createItem(
-    materials[itemNumber],
-    materialsImageSrc[itemNumber]
-  );
+  const createInvButton = createItem(materialName, materialImgSrc);
 
-  let inv = document.getElementById("inventory").appendChild(createInvButton);
-  inv.classList.add("inventorygrid");
+  createInvButton.addEventListener("click", () => {
+    if (selectedButton !== null) {
+      selectedButton.classList.remove("selected");
+    }
+    if (createInvButton == selectedButton) {
+      selectedMaterialName = "";
+      selectedMaterialImgSrc = "";
+      selectedButton = null;
+      selectedButton.classList.remove("selected");
+    } else {
+      selectedMaterialName = materialName;
+      selectedMaterialImgSrc = materialImgSrc;
+      selectedButton = createInvButton;
+    }
+
+    createInvButton.classList.add("selected");
+  });
+
+  inv.appendChild(createInvButton);
 }
+
+const recettePioche = [
+  "iron",
+  "iron",
+  "iron",
+  "",
+  "stick",
+  "",
+  "",
+  "stick",
+  "",
+];
+
+function verifierRecette(recette, table) {
+  for (let i = 1; i < recette.length; i++) {
+    for (let j = 0; j < table.length; j++) {
+      const recetteItem = recette[i];
+      const tableItem = table[j];
+
+      if (recetteItem != tableItem) {
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
+verifierRecette(recettePioche, craftingTable);
