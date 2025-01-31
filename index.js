@@ -198,11 +198,13 @@ const craftingTable = ["", "", "", "", "", "", "", "", ""];
 const inventoryTable = [2, 5, 1, 3, 4];
 
 //let pipette = MATERIAL_AIR_ID;
-let selectedMaterialName = "";
-let selectedMaterialImgSrc = "";
+let selectedMaterialName = MATERIAL_AIR_ID;
+let selectedMaterialImgSrc = MATERIAL_AIR_IMG;
 let selectedButton = null;
 // create item
 let inv = document.getElementById("inventory");
+
+const tableGridElements = document.querySelectorAll("#tablegrid");
 
 function createItem(alt, src) {
   const createInvButton = document.createElement("button");
@@ -228,8 +230,8 @@ for (let i = 0; i < inventoryTable.length; i++) {
       selectedButton.classList.remove("selected");
     }
     if (createInvButton == selectedButton) {
-      selectedMaterialName = "";
-      selectedMaterialImgSrc = "";
+      selectedMaterialName = MATERIAL_AIR_ID;
+      selectedMaterialImgSrc = MATERIAL_AIR_IMG;
       selectedButton = null;
       selectedButton.classList.remove("selected");
     } else {
@@ -240,35 +242,16 @@ for (let i = 0; i < inventoryTable.length; i++) {
 
     createInvButton.classList.add("selected");
   });
-
   inv.appendChild(createInvButton);
 }
 
-const recettePioche = [
-  "iron",
-  "iron",
-  "iron",
-  "",
-  "stick",
-  "",
-  "",
-  "stick",
-  "",
-];
+for (let i = 0; i < tableGridElements.length; i++) {
+  const tableGrid = tableGridElements[i];
 
-function verifierRecette(recette, table) {
-  for (let i = 1; i < recette.length; i++) {
-    for (let j = 0; j < table.length; j++) {
-      const recetteItem = recette[i];
-      const tableItem = table[j];
+  tableGrid.addEventListener("click", () => {
+    const image = tableGrid.firstElementChild;
 
-      if (recetteItem != tableItem) {
-        return false;
-      }
-    }
-  }
-
-  return true;
+    image.setAttribute("src", selectedMaterialImgSrc);
+    image.setAttribute("alt", selectedMaterialName);
+  });
 }
-
-verifierRecette(recettePioche, craftingTable);
